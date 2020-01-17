@@ -1,7 +1,7 @@
 //Stwórz program, który poprosi użytkownika o liczbę całkowitą i przyporządkuje ją
 do jednego z czterech przedziałów: liczb ujemnych, jednocyfrowych,
-dwucyfrowych lub pozostałych. (Liczba potraktowana jako string, jako pierwszy krok sprawdzenie jej ujemności, potem analogiczne
-traktowanie liczb dodatnich i ujemnych)
+dwucyfrowych lub pozostałych. (Liczba potraktowana jako string, jako pierwszy krok 
+sprawdzenie jej ujemności, potem analogiczne traktowanie liczb dodatnich i ujemnych)
 
 #include <iostream>
 #include <string>
