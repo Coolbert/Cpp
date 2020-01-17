@@ -1,0 +1,30 @@
+//Stwórz aplikację rozwiązującą równania kwadratowe. Pamiętaj, aby uwzględnić wartość
+współczynników, przy których równanie staje się liniowe.
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+int main()
+{
+float fA;
+cout << "Podaj wspolczynnik a: " << endl;
+cin >> fA;
+float fB;
+cout << "Podaj wspolczynnik b: " << endl;
+cin >> fB;
+float fC;
+cout << "Podaj wspolczynnik c: " << endl;
+cin >> fC;
+
+if (fB*fB-4*fA*fC < 0.0)
+cout << "Rownanie nie posiada rozwiazan." << endl;
+else if (fB*fB-4*fA*fC == 0.0)
+{
+cout << "Rownanie posiada jedno podwojne miejsca zerowe" << "x1 = x2= " << -fB/2*fA << endl;
+}
+else
+cout << "Rownanie posiada dwa miejsca zerowe: " << "x1 = " << -fB - sqrt(fB*fB-4*fA*fC) / 2*fA << " i x2 = " << -fB + sqrt(fB*fB-4*fA*fC) << endl;
+return 0;
+}
