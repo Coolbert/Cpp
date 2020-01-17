@@ -1,0 +1,30 @@
+// Napisz program, który pozwoli użytkownikowi na wprowadzenie dowolnej ilości
+liczb (ilość tą będzie podawał na początku) i obliczenie ich średniej arytmetycznej.
+Podawane liczby przechowuj w 100-elementowej tablicy (wykorzystasz zeń tylko
+część). Możesz też zrobić tak, by program nie pytał o ilość liczb, lecz prosił o
+kolejne aż do wpisania innych znaków.
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    int suma=0, a, counter=0;
+    vector <int> tab;
+    char b;
+    do
+    {
+    cout << "Prosze o podanie liczby: " << endl;
+    cin >> a;
+    tab.push_back(a);
+    suma = suma + a;
+    counter++;
+    cout << "Czy podac kolejna liczbe [t-tak lub n-nie]? " << endl;
+    cin >> b;
+    }
+    while(b=='t');
+    cout << "Srednia arytmetyczna liczb z tabeli wynosi: " << suma/counter << endl;
+    return 0;
+}
