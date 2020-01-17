@@ -1,0 +1,41 @@
+// Zmodyfikuj program przykładowy prezentujący pętlę while. Niech zlicza on próby
+zgadnięcia liczby podjęte przez gracza i wyświetla na końcu ich ilość. (Program
+poszerzony o naprowadzenie ciepło-zimno)
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+using namespace std;
+
+int main()
+{
+    int a, b, counter=0;
+    srand (time(NULL));
+    a = rand()%100+1;
+    while (a!=b)
+    {
+    cout << "Podaj liczbe z przedzialu od 1 do 100: " << endl;
+    cin >> b;
+    if (a==b)
+    cout << "Idealnie" << endl;
+    else if (abs(a-b)<5)
+    cout << "Goraco (mniej niz 5 roznicy)" << endl;
+    else if (abs(a-b)<10)
+    cout << "Cieplo (mniej niz 10 roznicy)" << endl;
+    else if (abs(a-b)<20)
+    cout << "Przyjemnie (mniej niz 20 roznicy)" << endl;
+    else if (abs(a-b)<30)
+    cout << "Chlodno (mniej niz 30 roznicy)" << endl;
+    else if (abs(a-b)<40)
+    cout << "Zimno (mniej niz 40 roznicy)" << endl;
+    else if (abs(a-b)<50)
+    cout << "Prawie (mniej niz 50 roznicy)"  << endl;
+    if (abs(a-b)>=50)
+    cout << "Lodowato (wiecej niz 50 roznicy)" << endl;
+    counter++;
+    }
+    cout << "Zgadles liczbe " << a << " za " << counter << "razem!" << endl;
+    return 0;
+}
