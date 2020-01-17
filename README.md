@@ -1,2 +1,1 @@
-# Cpp
-Solutions to exercises from the book
+# OD ZERA DO GIER KODERA
