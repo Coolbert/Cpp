@@ -1,0 +1,29 @@
+// Program sprawdzający, czy dana liczba jest pierwsza.
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+bool LiczbaPierwsza(unsigned uLiczba)
+{
+if (uLiczba == 2) return true;
+for (unsigned i = 2; i <= sqrt(uLiczba); ++i)
+{
+if (uLiczba % i == 0)
+return false;
+}
+return true;
+}
+
+int main()
+{
+unsigned uWartosc;
+cout << "Podaj liczbe: ";
+cin >> uWartosc;
+if (LiczbaPierwsza(uWartosc) ? 1 : 0)
+cout << "Liczba " << uWartosc << " jest pierwsza.";
+else
+cout << "Liczba " << uWartosc<< " nie jest pierwsza.";
+return 0;
+}
