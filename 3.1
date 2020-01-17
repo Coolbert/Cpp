@@ -1,0 +1,31 @@
+#Stwórz program, który poprosi użytkownika o liczbę całkowitą i przyporządkuje ją
+do jednego z czterech przedziałów: liczb ujemnych, jednocyfrowych,
+dwucyfrowych lub pozostałych (Brany pod uwagę przypadek, że np -54 jest ujemna i dwucyfrowa)
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int a;
+    cout << "Podaj liczbe calkowita: " << endl;
+    cin >> a;
+    if (a<0)
+    {
+    cout << "Liczba ujemna" << endl;
+    }
+    if ((a<0 && a>-10) || (a>0 && a<10))
+    {
+    cout << "Liczba jednocyfrowa" << endl;
+    }
+    if ((a<10 && a>-100) || (a>10 && a<100))
+    {
+    cout << "Liczba dwucyfrowa" << endl;
+    }
+    else
+    {
+    cout << "Pozostale liczby" << endl;
+    }
+    return 0;
+}
