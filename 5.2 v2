@@ -1,0 +1,32 @@
+// Stwórz aplikację, która będzie pokazywała liczbę dni do końca bieżącego roku.
+Wykorzystaj w niej strukturę tm i funkcję localtime() w taki sam sposób, jak w
+przykładzie Biorhytm.
+
+#include <iostream>
+#include <math.h>
+#include <ctime>
+
+using namespace std;
+
+    int policz_dni(int ilosc_miesiecy)
+    {
+    int DlugoscMiesiaca[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int ilosc_dni_w_miesiacu = 0;
+    for(int i = 0; i < ilosc_miesiecy; i++)
+    ilosc_dni_w_miesiacu += DlugoscMiesiaca[i];
+    return ilosc_dni_w_miesiacu;
+    }
+
+    int main()
+    {
+    tm AktualnyCzas = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    tm RoznicaCzasu = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+    time_t Czas = time(NULL);
+    AktualnyCzas = *localtime(&Czas);
+
+    RoznicaCzasu.tm_mday = policz_dni(12 - 1) - policz_dni(AktualnyCzas.tm_mon - 1) + 31 - AktualnyCzas.tm_mday;
+
+    cout << "Ilosc dni do konca roku wynosi: " << RoznicaCzasu.tm_mday << endl;
+    return 0;
+}
