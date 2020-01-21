@@ -1,0 +1,42 @@
+// DegreesCalc - kalkulator temperatur
+// typ wyliczeniowy okreslajacy skale temperatur
+
+#include <iostream>
+
+using namespace std;
+
+    enum SCALE {SCL_CELSIUS = 'c', SCL_FAHRENHEIT = 'f', SCL_KELVIN = 'k'};
+    class CDegreesCalc
+    {
+    private:
+    // temperatura w stopniach Celsjusza
+    double m_fStopnieC;
+    public:
+    // ustawienie i pobranie temperatury
+    void UstawTemperature(double fTemperatura, SCALE Skala);
+    double PobierzTemperature(SCALE Skala);
+    };
+
+    int main()
+    {
+    // zapytujemy o skale, w której bedzie wprowadzona wartosc
+    char chSkala;
+    cout << "Wybierz wejsciowa skale temperatur" << endl;
+    cout << "(c - Celsjusza, f - Fahrenheita, k - Kelwina): ";
+    cin >> chSkala;
+    if (chSkala != 'c' && chSkala != 'f' && chSkala != 'k')
+    return 0;
+    // zapytujemy o rzeczona temperature
+    float fTemperatura;
+    cout << "Podaj temperature: ";
+    cin >> fTemperatura;
+    // deklarujemy obiekt kalkulatora i przekazujemy don temp.
+    CDegreesCalc Kalkulator;
+    Kalkulator.UstawTemperature (fTemperatura, static_cast<SCALE>(chSkala));
+    // pokazujemy wynik - czyli temperature we wszystkich skalach
+    cout << endl;
+    cout << "- stopnie Celsjusza: " << Kalkulator.PobierzTemperature(SCL_CELSIUS) << endl;
+    cout << "- stopnie Fahrenheita: " << Kalkulator.PobierzTemperature(SCL_FAHRENHEIT) << endl;
+    cout << "- kelwiny: " << Kalkulator.PobierzTemperature(SCL_KELVIN) << endl;
+    return 0;
+    }
