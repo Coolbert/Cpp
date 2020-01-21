@@ -1,0 +1,163 @@
+// Kółko i krzyżyk - 1 etap do dopracowania
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <ctime>
+#include <conio.h>
+#include "game.h"
+
+using namespace std;
+
+    FIELD g_aPlansza[3][3] = { { FLD_EMPTY, FLD_EMPTY, FLD_EMPTY },
+                                { FLD_EMPTY, FLD_EMPTY, FLD_EMPTY },
+                                { FLD_EMPTY, FLD_EMPTY, FLD_EMPTY } };
+    GAMESTATE g_StanGry = GS_NOTSTARTED;
+    SIGN g_AktualnyGracz;
+
+    bool StartGry()
+    {
+    if (g_StanGry != GS_NOTSTARTED) return false;
+    // losujemy gracza, który bêdzie zaczyna³
+    srand (static_cast<unsigned>(time(NULL)));
+    g_AktualnyGracz = (rand() % 2 == 0 ? SGN_CIRCLE : SGN_CROSS);
+    // ustawiamy stan gry na ruch graczy
+    g_StanGry = GS_MOVE;
+    return true;
+    }
+
+    bool Ruch(unsigned uNumerPola)
+    {
+    if (g_StanGry != GS_MOVE) return false;
+    if (!(uNumerPola >= 1 && uNumerPola <= 9)) return false;
+    unsigned uY = (uNumerPola - 1) / 3;
+    unsigned uX = (uNumerPola - 1) % 3;
+    if (g_aPlansza[uY][uX] == FLD_EMPTY)
+    // wstaw znak aktualnego gracza w podanym polu
+    else
+        return false;
+    g_aPlansza[uY][uX] = static_cast<FIELD>(g_AktualnyGracz);
+    const LINIE[][3][2] = { { { 0,0 }, { 0,1 }, { 0,2 } }, // górna pozioma
+                            { { 1,0 }, { 1,1 }, { 1,2 } },// środ. pozioma
+                            { { 2,0 }, { 2,1 }, { 2,2 } },// dolna pozioma
+                            { { 0,0 }, { 1,0 }, { 2,0 } }, // lewa pionowa
+                            { { 0,1 }, { 1,1 }, { 2,1 } }, // środ. pionowa
+                            { { 0,2 }, { 1,2 }, { 2,2 } }, // prawa pionowa
+                            { { 0,0 }, { 1,1 }, { 2,2 } }, // p. backslashowa
+                            { { 2,0 }, { 1,1 }, { 0,2 } } }; // p. slashowa
+
+    FIELD Pole, ZgodnePole;
+    unsigned uLiczbaZgodnychPol;
+    for (int i = 0; i < 8; ++i)
+    {
+    // i przebiega po kolejnych możliwych liniach (jest ich osiem)
+    // zerujemy zmienne pomocnicze
+    Pole = ZgodnePole = FLD_EMPTY; // obie zmienne == FLD_EMPTY
+    uLiczbaZgodnychPol = 0;
+    for (int j = 0; j < 3; ++j)
+    {
+    // j przebiega po trzech polach w każdej linii
+    // pobieramy rzeczone pole
+    // to zdecydowanie najbardziej pogmatwane wyrażenie :)
+    Pole = g_aPlansza[LINIE[i][j][0]][LINIE[i][j][1]];
+    // jeśli sprawdzane pole różne od tego, które ma się zgadzać...
+    if (Pole != ZgodnePole)
+    {
+        // to zmieniamy zgadzane pole na to aktualne
+    ZgodnePole = Pole;
+    uLiczbaZgodnychPol = 1;
+    }
+    else
+    // jeśli natomiast oba pola się zgadzają, no to
+    // inkrementujemy licznik takich zgodnych pól
+    ++uLiczbaZgodnychPol;
+    }
+    // teraz sprawdzamy, czy udało nam się zgodzić linię
+    if (uLiczbaZgodnychPol == 3 && ZgodnePole != FLD_EMPTY)
+    {
+    // jeżeli tak, no to ustawiamy stan gry na wygraną
+    g_StanGry = GS_WON;
+    // przerywamy pętlę i funkcję
+    return true;
+    }
+    unsigned uLiczbaZapelnionychPol = 0;
+    for (int i = 0; i < 3; ++i)
+    for (int j = 0; j < 3; ++j)
+    if (g_aPlansza[i][j] != FLD_EMPTY)
+    ++uLiczbaZapelnionychPol;
+
+    if (uLiczbaZapelnionychPol == 3*3)
+    {
+    g_StanGry = GS_DRAW;
+    return true;
+    }
+    g_AktualnyGracz = (g_AktualnyGracz == SGN_CIRCLE ? SGN_CROSS : SGN_CIRCLE);
+    return true;
+    }
+    }
+
+    bool RysujPlansze()
+    {
+    if (g_StanGry == GS_NOTSTARTED) return false;
+    system ("cls");
+    cout << " KOLKO I KRZYZYK " << endl;
+    cout << "---------------------" << endl;
+    cout << endl;
+    cout << " -----" << endl;
+    for (int i = 0; i < 3; ++i)
+    {
+    // lewa część ramki
+    cout << " |";
+    // wiersz
+    for (int j = 0; j < 3; ++j)
+    {
+    if (g_aPlansza[i][j] == FLD_EMPTY)
+    // numer pola
+    cout << i * 3 + j + 1;
+    else
+    // tutaj wyświetlamy kółko lub krzyżyk... ale jak? :)
+    }
+    // prawa część ramki
+    cout << "|" << endl;
+    }
+    cout << " -----" << endl;
+    cout << endl;
+    cout << static_cast<char>(g_aPlansza[i][j]);
+    switch (g_StanGry)
+    {
+    case GS_MOVE:
+    // prośba o następny ruch
+    cout << "Podaj numer pola, w ktorym" << endl;
+    cout << "chcesz postawic ";
+    cout << (g_AktualnyGracz == SGN_CIRCLE ? "kolko" : "krzyzyk") << ": ";
+    break;
+    case GS_WON:
+    // informacja o wygranej
+    cout << "Wygral gracz stawiajacy ";
+    cout << (g_AktualnyGracz == SGN_CIRCLE ? "kolka" : "krzyzyki") << "!";
+    break;
+    case GS_DRAW:
+    // informacja o remisie
+    cout << "Remis!";
+    break;
+    }
+    return true;
+    }
+
+    int main()
+    {
+    StartGry();
+    for (;;)
+    {
+    RysujPlansze();
+    if (g_StanGry == GS_MOVE)
+    {
+    unsigned uNumerPola;
+    cin >> uNumerPola;
+    Ruch (uNumerPola);
+    }
+    else if (g_StanGry == GS_WON || g_StanGry == GS_DRAW)
+    break;
+    }
+    }
